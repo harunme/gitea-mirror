@@ -72,7 +72,7 @@ export const POST: APIRoute = async ({ request }) => {
 
     // Calculate nextRun and update lastRun and nextRun in the config
     const currentTime = new Date();
-    const interval = config.scheduleConfig?.interval ?? 3600;
+    const interval = config.scheduleConfig?.interval ?? 86400; // Default to 24 hours
     const nextRun = new Date(currentTime.getTime() + interval * 1000);
 
     // Update the full giteaConfig object

@@ -229,13 +229,13 @@ export const GET: APIRoute = async ({ request }) => {
           isActive: true,
           ...uiConfig,
           scheduleConfig: {
-            enabled: false,
-            interval: 3600,
+            enabled: true,
+            interval: 86400, // 24 hours (1 day) in seconds
             lastRun: null,
             nextRun: null,
           },
           cleanupConfig: {
-            enabled: false,
+            enabled: true,
             retentionDays: 604800, // 7 days in seconds
             lastRun: null,
             nextRun: null,

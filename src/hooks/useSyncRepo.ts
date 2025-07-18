@@ -12,7 +12,7 @@ interface UseRepoSyncOptions {
 export function useRepoSync({
   userId,
   enabled = true,
-  interval = 3600,
+  interval = 86400, // Default to 24 hours
   lastSync,
   nextSync,
 }: UseRepoSyncOptions) {

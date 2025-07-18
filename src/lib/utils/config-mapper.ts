@@ -184,7 +184,7 @@ export function mapUiScheduleToDb(uiSchedule: any): DbScheduleConfig {
  */
 export function mapDbScheduleToUi(dbSchedule: DbScheduleConfig): any {
   // Extract hours from cron expression if possible
-  let intervalSeconds = 3600; // Default 1 hour
+  let intervalSeconds = 86400; // Default 24 hours
   const cronMatch = dbSchedule.interval.match(/0 \*\/(\d+) \* \* \*/);
   if (cronMatch) {
     intervalSeconds = parseInt(cronMatch[1]) * 3600;

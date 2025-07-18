@@ -11,6 +11,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { useAuth } from "@/hooks/useAuth";
 import { useRepoSync } from "@/hooks/useSyncRepo";
 import { useConfigStatus } from "@/hooks/useConfigStatus";
+import { useConfig } from "@/hooks/useConfig";
 
 // Navigation context to signal when navigation happens
 const NavigationContext = createContext<{ navigationKey: number }>({ navigationKey: 0 });
@@ -42,16 +43,17 @@ export default function App({ page }: AppProps) {
 function AppWithProviders({ page: initialPage }: AppProps) {
   const { user, isLoading: authLoading } = useAuth();
   const { isLoading: configLoading } = useConfigStatus();
+  const { config } = useConfig();
   const [currentPage, setCurrentPage] = useState<AppProps['page']>(initialPage);
   const [navigationKey, setNavigationKey] = useState(0);
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   useRepoSync({
     userId: user?.id,
-    enabled: user?.syncEnabled,
-    interval: user?.syncInterval,
-    lastSync: user?.lastSync,
-    nextSync: user?.nextSync,
+    enabled: config?.scheduleConfig?.enabled,
+    interval: config?.scheduleConfig?.interval,
+    lastSync: config?.scheduleConfig?.lastRun,
+    nextSync: config?.scheduleConfig?.nextRun,
   });
 
   // Handle navigation from sidebar
