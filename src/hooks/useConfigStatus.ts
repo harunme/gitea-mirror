@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState, useRef } from 'react';
 import { useAuth } from './useAuth';
 import { apiRequest } from '@/lib/utils';
+import type { ConfigApiResponse, SourceApiRecord } from '@/types/config';
 import type { ConfigApiResponse } from '@/types/config';
 import {
   DEFAULT_SOURCE_PROVIDER,
@@ -16,6 +17,7 @@ interface ConfigStatus {
   error: string | null;
   autoMirrorStarred: boolean;
   githubOwner: string;
+  sources: SourceApiRecord[];
   sourceProvider: SourceProviderKind;
 }
 
@@ -43,6 +45,7 @@ export function useConfigStatus(): ConfigStatus {
     error: null,
     autoMirrorStarred: false,
     githubOwner: '',
+    sources: [],
     sourceProvider: DEFAULT_SOURCE_PROVIDER,
   });
 
@@ -59,6 +62,7 @@ export function useConfigStatus(): ConfigStatus {
         error: 'No user found',
         autoMirrorStarred: false,
         githubOwner: '',
+        sources: [],
         sourceProvider: DEFAULT_SOURCE_PROVIDER,
       });
       return;
@@ -96,6 +100,7 @@ export function useConfigStatus(): ConfigStatus {
         error: null,
         autoMirrorStarred: configResponse?.advancedOptions?.autoMirrorStarred ?? false,
         githubOwner: configResponse?.githubConfig?.username ?? '',
+        sources: configResponse?.sources ?? [],
         sourceProvider: normalizeSourceProviderKind(configResponse?.githubConfig?.provider),
       });
       return;
@@ -142,6 +147,7 @@ export function useConfigStatus(): ConfigStatus {
         error: null,
         autoMirrorStarred: configResponse?.advancedOptions?.autoMirrorStarred ?? false,
         githubOwner: configResponse?.githubConfig?.username ?? '',
+        sources: configResponse?.sources ?? [],
         sourceProvider: normalizeSourceProviderKind(configResponse?.githubConfig?.provider),
       });
 
@@ -155,6 +161,7 @@ export function useConfigStatus(): ConfigStatus {
         error: error instanceof Error ? error.message : 'Failed to check configuration',
         autoMirrorStarred: false,
         githubOwner: '',
+        sources: [],
         sourceProvider: DEFAULT_SOURCE_PROVIDER,
       });
       hasCheckedRef.current = true;
